@@ -1,5 +1,17 @@
 import { Todo } from "@/types/todo";
 
+function loadDummyData() {
+  return (async () => {
+    const todos = (await (await fetch("https://dummyjson.com/todos")).json())
+      .todos;
+
+    return todos.map((todo: Todo) => ({
+      ...todo,
+      userId: null,
+    }));
+  })();
+}
+
 class SseStore {
   private static instance: SseStore | null = null;
   private items: Todo[] = [];
@@ -17,13 +29,8 @@ class SseStore {
   }
 
   async fetchItems() {
-    const todos = (await (await fetch("https://dummyjson.com/todos")).json())
-      .todos;
-
-    this.items = todos.map((todo: Todo) => ({
-      ...todo,
-      userId: null,
-    }));
+    // This just simulates loading data from an API
+    this.items = await loadDummyData();
 
     this.notifyListeners();
   }
