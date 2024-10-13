@@ -4,6 +4,8 @@ import { Todo } from "@/types/todo";
 import { useEffect, useState } from "react";
 import { claimItem } from "../actions";
 
+const DOMAIN_URL = process.env.NEXT_PUBLIC_DOMAIN_URL;
+
 export default function HomePage() {
   const [userId, setUserId] = useState<string | null>(null);
   const [itemsFromApi, setItemsFromApi] = useState<Todo[]>([]);
@@ -16,7 +18,7 @@ export default function HomePage() {
     setUserId(localStorage.getItem("userId"));
 
     // Connect to the server-sent events endpoint
-    const eventSource = new EventSource("/api/sse");
+    const eventSource = new EventSource(`${DOMAIN_URL}/api/sse`);
 
     // Listen for messages from the server
     eventSource.onmessage = (event) => {

@@ -2,7 +2,6 @@ import { SseStore } from "@/stores/sse.store";
 import { Todo } from "@/types/todo";
 import { NextRequest } from "next/server";
 
-// These settings are required to enable streaming
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
