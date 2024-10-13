@@ -2,8 +2,8 @@ import { SseStore } from "@/stores/sse.store";
 import { Todo } from "@/types/todo";
 import { NextRequest } from "next/server";
 
-export const runtime = "nodejs";
-// This is required to enable streaming
+// These settings are required to enable streaming
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
@@ -25,8 +25,10 @@ export async function GET(req: NextRequest) {
     });
   };
 
+  // Add the listener to the store
   SseStore.addListener(listener);
 
+  // Send the initial list of items
   sendUpdate({
     items: SseStore.getItems(),
   });

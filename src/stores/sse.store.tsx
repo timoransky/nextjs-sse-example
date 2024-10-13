@@ -50,7 +50,9 @@ class SseStore {
   }
 
   addListener(listener: (items: Todo[]) => void) {
-    this.listeners.add(listener);
+    if (this.listeners.size >= 5) {
+      this.listeners.add(listener);
+    }
   }
 
   removeListener(listener: (items: Todo[]) => void) {
